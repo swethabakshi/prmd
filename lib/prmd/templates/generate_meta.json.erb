@@ -1,0 +1,23 @@
+{
+    "$schema": "https://westcon-group.com/api/v4/hyper-schema#",
+    "description": "<%= company %> Supplier - Nimbus v4 API",
+    "id": "<%= company.parameterize %>-supplier-api-v4",
+    "title": "<%= company %>",
+    "api_version": 4,
+    "provider_level": <%= level || 3 %>,
+    "links": [
+        {
+            "href": "https://<%= company.parameterize %>.com/api/nimbus/v4",
+            "rel": "self"
+        },
+        {
+            "href": "/schema",
+            "method": "GET",
+            "rel": "self",
+            "targetSchema": {
+                "additionalProperties": true
+            }
+        }
+    ]
+ 
+}

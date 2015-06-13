@@ -1,40 +1,53 @@
 {
-    "$schema": "http://interagent.github.io/interagent-hyper-schema#",
-    "id": "http://interagent.github.io/interagent-hyper-schema#",
-    "title": "Heroku JSON Hyper-Schema",
+    "$schema": "http://json-schema.org/draft-04/hyper-schema#",
+    "id": "https://westcon-group.com/api/v4/hyper-schema#",
+    "title": "Westcon Supplier JSON Hyper-Schema",
     "allOf": [
         {
             "$ref": "http://json-schema.org/draft-04/hyper-schema#"
         }
     ],
     "definitions": {
-        "identity": {
+        "resourceId": {
             "anyOf": [
                 {
-                    "additionalProperties": false,
                     "properties": {
-                        "anyOf": {
-                            "additionalProperties": {
-                                "$ref": "#/definitions/ref"
-                            },
-                            "minProperties": 1
+                        "id": {
+                            "type": "integer"
                         }
-                    },
-                    "required": ["anyOf"]
+                    }
                 },
                 {
-                    "properties": {},
-                    "strictProperties": true
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        }
+                    }
                 }
             ]
         },
-        "ref": {
-            "additionalProperties": false,
+        "link": {
             "properties": {
-                "$ref": {
-                    "type": "string"
+                "href": {
+                    "pattern": "^(/([a-z][a-z\\-_]*[a-z]|\\{\\(.*\\)\\}))+$"
+                },
+                "schema": {
+                    "anyOf": [
+                        {
+                            "required": ["properties","type"]
+                        },
+                        {
+                            "required": ["patternProperties","type"]
+                        },
+                        {
+                            "$ref": "#/definitions/ref"
+                        }
+                    ]
                 }
             },
+            "required": ["description", "href", "method", "rel", "title"]
+        },
+        "ref": {
             "required": ["$ref"]
         },
         "resource": {
@@ -46,11 +59,11 @@
                                 "$ref": "#/definitions/resourceDefinition"
                             },
                             "properties": {
-                                "identity": {
-                                    "$ref": "#/definitions/identity"
+                                "id": {
+                                    "$ref": "#/definitions/resourceId"
                                 }
                             },
-                            "required": ["identity"]
+                            "required": ["id"]
                         }
                     }
                 }
@@ -58,7 +71,7 @@
             "properties": {
                 "links": {
                     "items": {
-                        "$ref": "#/definitions/resourceLink"
+                        "$ref": "#/definitions/link"
                     }
                 },
                 "properties": {
@@ -77,7 +90,6 @@
             "required": [
                 "definitions",
                 "description",
-                "links",
                 "title",
                 "type"
             ]
@@ -100,25 +112,6 @@
                 "required": ["links"]
             },
             "required": ["description"]
-        },
-        "resourceLink": {
-            "properties": {
-                "href": {
-                    "pattern": "^(/([a-z][a-z\\-]*[a-z]|\\{\\(.*\\)\\}))+$"
-                },
-                "schema": {
-                    "anyOf": [
-                        {
-                            "required": ["properties"]
-                        },
-                        {
-                            "required": ["patternProperties"]
-                        }
-                    ],
-                    "required": ["type"]
-                }
-            },
-            "required": ["description", "href", "method", "rel", "title"]
         },
         "resourceProperty": {
             "anyOf": [
@@ -148,12 +141,53 @@
                     "required": ["description", "items", "type"]
                 }
             ]
+        },
+        "eventDefinition": {
+            "properties": {
+              "links": {
+                  "items": [
+                      { 
+                          "properties": {
+                              "href": {
+                                  "type": "string"
+                              },
+                              "rel": {
+                                  "enum": ["self"]
+                              }
+                          }
+                      },
+                      {
+                          "properties": {
+                              "href": {
+                                  "type": "string"
+                              },
+                              "rel": {
+                                  "enum": ["instances"]
+                              }
+                          }
+                          
+                      }
+                  ]
+              }
+            },
+            "required": ["links"]
         }
     },
     "properties": {
         "definitions": {
+            "properties": {
+                "event": {
+                    "$ref": "#/definitions/eventDefinition"
+                }
+            },
             "additionalProperties": {
                 "$ref": "#/definitions/resource"
+            },
+            "required": ["event"]
+        },
+        "links": {
+            "additionalProperties": {
+                "$ref": "#/definitions/ref"
             }
         },
         "properties": {

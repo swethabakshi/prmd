@@ -3,21 +3,6 @@ require 'yaml'
 
 # :nodoc:
 module Prmd
-  # @api private
-  DefaultExamples = {
-    "boolean" => true,
-    "integer" => 42,
-    "number"  => 42.0,
-    "string"  => "example",
-
-    "date-time" => "2015-01-01T12:00:00Z",
-    "email"     => "username@example.com",
-    "hostname"  => "example.com",
-    "ipv4"      => "192.0.2.1",
-    "ipv6"      => "2001:DB8::1",
-    "uuid"      => "01234567-89ab-cdef-0123-456789abcdef",
-  }
-
   # Schema object
   class Schema
     # @return [Hash] data
@@ -37,9 +22,9 @@ module Prmd
       when Array
         datum.map { |element| convert_type_to_array(element) }
       when Hash
-        if datum.key?('type') && datum['type'].is_a?(String)
-          datum['type'] = [*datum['type']]
-        end
+        #if datum.key?('type') && datum['type'].is_a?(String)
+        #  datum['type'] = [*datum['type']]
+        #end
         datum.each_with_object({}) do |(k, v), hash|
           hash[k] = convert_type_to_array(v)
         end
@@ -126,10 +111,6 @@ module Prmd
         else
           [schema_example(items)]
         end
-      elsif DefaultExamples.key?(value["format"])
-        DefaultExamples[value["format"]]
-      elsif DefaultExamples.key?(value["type"][0])
-        DefaultExamples[value["type"][0]]
       end
     end
 

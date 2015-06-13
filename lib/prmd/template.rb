@@ -1,5 +1,6 @@
 require 'erubis'
 require 'json'
+require 'active_support/all'
 
 # :nodoc:
 module Prmd

@@ -1,12 +1,18 @@
-# Prmd [![Travis Status](https://travis-ci.org/interagent/prmd.svg)](https://travis-ci.org/interagent/prmd)
+# Prmd - Nimbus Supplier API v4
 
-[![Gem Version](https://badge.fury.io/rb/prmd.svg)](http://badge.fury.io/rb/prmd)
+JSON Schema tooling for the Nimbus Supplier API version 4. Prmd allows you to:
 
-JSON Schema tooling: scaffold, verify, and generate documentation
-from JSON Schema documents.
+1. scaffold an entire JSON schema project, properly structured
+2. generate your final json schema in seconds
+3. validate your schema, ensure it is nimbus compliant
+4. automatically generate the documentation for your API
+
+All in one tool.
 
 
 ## Introduction
+
+Looking at getting started quickly with the Nimbus integration? Read our [GET STARTED](https://bitbucket.org/verecloud/nimbus.supplier.sdk/src/jsonschema/docs-v4/md/GET_STARTED.md) guide.
 
 [JSON Schema](http://json-schema.org/) provides a great way to describe
 an API. prmd provides tools for bootstrapping a description like this,
@@ -21,17 +27,27 @@ described in [/docs/schemata.md](/docs/schemata.md).
 
 ## Installation
 
+**Note:** prmd requires you to have ruby and rubygems installed.
+
+
 Install the command-line tool with:
 
 ```bash
-$ gem install prmd
+# Only available if you have read access to the project
+$ cd /tmp
+$ git clone git@bitbucket.org:verecloud/nimbus.supplier.sdk.git
+$ git co jsonschema
+$ gem install tools/prmd/prmd-0.7.0.gem
 ```
 
+
+**Bundler install** via git **NOT** available for the moment
 If you're using prmd within a Ruby project, you may want to add it
 to the application's Gemfile:
 
 ```ruby
-gem 'prmd'
+# Gem install via git
+gem 'prmd', git: 'git@bitbucket.org:verecloud/nimbus.supplier.sdk.git'
 ```
 
 ```bash
@@ -40,57 +56,69 @@ $ bundle install
 
 ## Usage
 
-Prmd provides four main commands:
+Prmd provides 6 main commands:
 
-* `init`: Scaffold resource schemata
+* `init`: Scaffold a new project
+* `generate`: Scaffold resource schemata
 * `combine`: Combine schemata and metadata into single schema
 * `verify`: Verify a schema
 * `doc`: Generate documentation from a schema
 * `render`: Render views from schema
 
-Here's an example of using these commands in a typical workflow:
+Here's an example of going from zero to a full project:
 
 ```bash
-# Fill out the resource schemata
-$ mkdir -p schemata
-$ prmd init app  > schemata/app.json
-$ prmd init user > schemata/user.json
-$ vim schemata/{app,user}.json   # edit scaffolded files
+# Scaffold a new project for a provider level 3 (default)
+# This command will create the acme-email folder and bootstrap
+# the project with a meta.json file (global definition) plus
+# a set of product/system/account resources
+$ prmd init Acme Email
 
-# Provide top-level metadata
-$ cat <<EOF > meta.json
-{
- "description": "Hello world prmd API",
- "id": "hello-prmd",
- "links": [{
-   "href": "https://api.hello.com",
-   "rel": "self"
- }],
- "title": "Hello Prmd"
-}
-EOF
+# Or if you prefer the YAML format
+$ prmd init --yaml Acme Email
 
-# Combine into a single schema
+# Generate your JSON schema from your meta + resource definitions
+$ cd acme-email
 $ prmd combine --meta meta.json schemata/ > schema.json
 
-# Check it’s all good
+# Check your schema is nimbus-valid
+# Note: this may not pass at the moment - hyper-schema is currently work in progress
 $ prmd verify schema.json
 
-# Build docs
+# Generate your JSON schema documentation
 $ prmd doc schema.json > schema.md
 ```
 
-### Using YAML instead of JSON as a resource and meta format
-
-`init` and `combine` supports YAML format:
-
+For other supplier levels, you would do the following
 ```bash
-# Generate resources in YAML format
-$ prmd init --yaml app  > schemata/app.yml
-$ prmd init --yaml user > schemata/user.yml
+# Scaffold a new project which only contains product provisioning
+$ prmd init --level 2 Acme Email
 
-# Combine into a single schema
-$ prmd combine --meta meta.json schemata/ > schema.json
+# Scaffold a new project which only contains product definition
+$ prmd init --level 1 Acme Email
+
+# Different levels can also be generated in YAML format
+$ prmd init --yaml --level 2 Acme Email
+```
+
+If you need to create a new resource (product, account or system)
+```bash
+# Navigate to your project directory
+$ cd acme-email
+
+# Generate a new 'Load Balancer' product
+$ prmd generate Load Balancer > schemata/products/load_balancer.json
+
+# If you are working on a project for a level 1 or level 2 supplier, just
+# specify the level when creating new resources
+# E.g.: level 1 will not generate any link for the product
+$ prmd generate --level 1 Load Balancer > schemata/products/load_balancer.json
+
+# It also works with YAML
+$ prmd generate --yaml --level 1 Load Balancer > schemata/products/load_balancer.yml
+
+# To preview a resource schema without actually generating a file
+$ prmd generate --level 1 Load Balancer
 ```
 
 `combine` can detect both `*.yml` and `*.json` and use them side by side. For example, if one have a lot of legacy JSON resources and wants to create new resources in YAML format - `combine` will be able to handle it properly.
@@ -125,7 +153,7 @@ $ prmd doc --settings config.json schema.json > schema.md
 ```
 
 Available options (and their defaults)
-```js
+```json
 {
   "doc": {
     "url_style": "default", // can also be "json"
@@ -171,7 +199,12 @@ We suggest the following file layout for JSON schema related files:
 /docs (top-level directory for project documentation)
   /schema (API schema documentation)
     /schemata
-      /{resource.[json,yml]} (individual resource schema)
+      /account
+        /{organization.[json,yml]} (individual account schema - level 3 only)
+      /products
+        /{virtual_machine.[json,yml]} (individual product schema - all levels)
+      /system
+        /{event.[json,yml]} (system usage/event/statistic resources - level 3 only)
     /meta.[json,yml] (overall API metadata)
     /overview.md (preamble for generated API docs)
     /schema.json (complete generated JSON schema file)

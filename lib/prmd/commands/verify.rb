@@ -10,7 +10,8 @@ module Prmd
     SCHEMAS = [
       'schema.json',
       'hyper-schema.json',
-      'interagent-hyper-schema.json'
+      'interagent-hyper-schema.json',
+      'nimbus-hyper-schema.json'
     ]
 
     # @return [JsonSchema::DocumentStore]

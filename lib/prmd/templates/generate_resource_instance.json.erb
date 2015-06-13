@@ -1,0 +1,106 @@
+{
+    "id": "schemata/resource_instance",
+    "description": "A resource instance is a full representation of a customer account including company and product details",
+    "$schema": "http://json-schema.org/draft-04/hyper-schema",
+    "title": "Resource Instance",
+    "type": "object",
+    "entity": "resource_instance",
+    "definitions": {
+        "id": {
+            "$ref": "/schemata/organization#/definitions/id"
+        }
+    },
+    "links": [
+        {
+            "title": "List",
+            "description": "List all resource instances",
+            "href": "/resource_instances",
+            "method": "GET",
+            "rel": "instances",
+            "targetSchema": {
+                "properties": {
+                    "organization": {
+                        "$ref": "/schemata/organization#"
+                    },
+                    "virtual_machines": {
+                        "items": {
+                            "$ref": "/schemata/virtual_machine#"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        {
+            "title": "Info",
+            "description": "Info for a resource instance",
+            "href": "/resource_instances/{(%2Fschemata%2Fresource_instance%23%2Fdefinitions%2Fid)}",
+            "method": "GET",
+            "rel": "self",
+            "targetSchema": {
+                "properties": {
+                    "organization": {
+                        "$ref": "/schemata/organization#"
+                    },
+                    "virtual_machines": {
+                        "items": {
+                            "$ref": "/schemata/virtual_machine#"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        {
+            "title": "Create",
+            "description": "Create a new organization",
+            "href": "/resource_instances",
+            "method": "POST",
+            "rel": "create",
+            "schema": {
+                "properties": {
+                    "organization": {
+                        "properties": {
+                            "name": {
+                                "$ref": "/schemata/organization#/definitions/name"
+                            }
+                        }
+                    }
+                },
+                "required": ["name"],
+                "type": "object"
+            },
+            "targetSchema": {
+                "properties": {
+                    "organization": {
+                        "$ref": "/schemata/organization#"
+                    },
+                    "virtual_machines": {
+                        "items": {
+                            "$ref": "/schemata/virtual_machine#"
+                        },
+                        "type": "array"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    ],
+    "properties": {
+        "id": {
+            "$ref": "/schemata/resource_instance#/definitions/id"
+        },
+        "organization": {
+            "$ref": "/schemata/organization#"
+        },
+        "virtual_machines": {
+            "description": "e.g.: the list of virtual machines under the resource instance",
+            "items": {
+                "$ref": "/schemata/virtual_machine#"
+            },
+            "type": "array"
+        }
+    }
+}

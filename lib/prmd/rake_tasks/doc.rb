@@ -15,7 +15,7 @@ module Prmd
     #     t.files = { 'schema/api.json' => 'schema/api.md' }
     #   end
     class Doc < Base
-      # Schema files that should be rendered
+      # Schema files that should be verified
       # @return [Array<String>, Hash<String, String>] list of files
       attr_accessor :files
 
@@ -71,7 +71,7 @@ module Prmd
       # Defines the rake task
       # @return [void]
       def define
-        desc 'Generate documentation' unless Rake.application.last_comment
+        desc 'Verifying schemas' unless Rake.application.last_comment
         task(name) do
           if files.is_a?(Hash)
             files.each do |infile, outfile|

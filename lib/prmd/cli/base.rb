@@ -1,6 +1,9 @@
 require 'json'
 require 'prmd/core_ext/optparse'
 require 'prmd/load_schema_file'
+require 'colorize'
+require 'active_support/all'
+require 'fileutils'
 
 module Prmd
   module CLI
@@ -24,6 +27,20 @@ module Prmd
       # @abstract
       def make_parser(options = {})
         #
+      end
+      
+      def notify(category,message = nil, lvl = :info)
+        unless message
+          $stdout.puts category
+          return
+        end
+        
+        color = {info: :light_blue, warning: :yellow, success: :green }[lvl.to_sym]
+        $stdout.puts "    [#{category}] #{message}".colorize(color)
+      end
+      
+      def echo(message)
+        $stdout.puts message
       end
 
       # Runs the provided parser with the provided argv.

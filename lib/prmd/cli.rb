@@ -1,4 +1,5 @@
 require 'prmd/core_ext/optparse'
+require 'prmd/cli/init'
 require 'prmd/cli/combine'
 require 'prmd/cli/doc'
 require 'prmd/cli/generate'
@@ -13,11 +14,12 @@ module Prmd
     # @return [Hash<Symbol, OptionParser>] all dem parsers
     def self.make_command_parsers(props = {})
       {
-        combine: CLI::Combine.make_parser(props),
-        doc:     CLI::Doc.make_parser(props),
-        init:    CLI::Generate.make_parser(props),
-        render:  CLI::Render.make_parser(props),
-        verify:  CLI::Verify.make_parser(props)
+        init:     CLI::Init.make_parser(props),
+        combine:  CLI::Combine.make_parser(props),
+        doc:      CLI::Doc.make_parser(props),
+        generate: CLI::Generate.make_parser(props),
+        render:   CLI::Render.make_parser(props),
+        verify:   CLI::Verify.make_parser(props)
       }
     end
 
@@ -87,11 +89,13 @@ module Prmd
       command = options.delete(:command)
 
       case command
+      when :init
+        CLI::Init.run(argv, options)
       when :combine
         CLI::Combine.run(argv, options)
       when :doc
         CLI::Doc.run(argv, options)
-      when :init
+      when :generate
         CLI::Generate.run(argv, options)
       when :render
         CLI::Render.run(argv, options)

@@ -5,32 +5,29 @@ require 'prmd/core/generator'
 # :nodoc:
 module Prmd
   # Schema generation
-  module Generate
+  module Init
     # Creates a default Prmd::Generator using default templates
     #
     # @return [Prmd::Generator]
     def self.make_generator
-      base = Prmd::Template.load_json('init_default.json')
-      template = Prmd::Template.load_template('init_resource.json.erb', '')
+      base = {}
+      template = Prmd::Template.load_template('generate_meta.json.erb', '')
       Prmd::Generator.new(base: base, template: template)
     end
   end
 
-  # Generate a schema template
+  # Generate a new JSON Schema project with a default meta(.json|yml)
   #
   # @param [String] resource
   # @param [Hash<Symbol, Object>] options
   # @return [String] schema template in YAML (yaml option was enabled) else JSON
-  def self.init(resource, options = {})
-    gen = Generate.make_generator
+  def self.init(company, options = {})
+    gen = Init.make_generator
 
-    generator_options = { resource: nil, parent: nil }
-    if resource
-      parent = nil
-      parent, resource = resource.split('/') if resource.include?('/')
-      generator_options[:parent] = parent
-      generator_options[:resource] = resource
-    end
+    generator_options = { 
+      company: company, 
+      level: options[:level] || 3
+    }
 
     schema = gen.generate(generator_options)
 
