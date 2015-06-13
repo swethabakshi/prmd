@@ -1,11 +1,11 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'helpers'))
 require 'nbmd_ps/cli/combine'
 
-class Nbmd_psCliCombineTest < Minitest::Test
+class NbmdPsCliCombineTest < Minitest::Test
   include CliBaseTestHelpers
 
   def command_module
-    Nbmd_ps::CLI::Combine
+    NbmdPs::CLI::Combine
   end
 
   def argv_for_test_run

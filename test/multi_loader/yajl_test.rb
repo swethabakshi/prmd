@@ -5,11 +5,11 @@ rescue LoadError
   #
 end
 
-class Nbmd_psMultiLoaderYajlTest < Minitest::Test
-  include Nbmd_psLoaderTests
+class NbmdPsMultiLoaderYajlTest < Minitest::Test
+  include NbmdPsLoaderTests
 
   def loader_module
-    Nbmd_ps::MultiLoader::Yajl
+    NbmdPs::MultiLoader::Yajl
   end
 
   def testing_filename

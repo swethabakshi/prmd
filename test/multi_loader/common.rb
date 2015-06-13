@@ -1,6 +1,6 @@
 require File.expand_path('../helpers', File.dirname(__FILE__))
 
-module Nbmd_psLoaderTests
+module NbmdPsLoaderTests
   # @abstrac
   def testing_filename
     #

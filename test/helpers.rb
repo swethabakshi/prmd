@@ -3,7 +3,7 @@ require 'minitest/autorun'
 require 'nbmd_ps'
 require 'nbmd_ps/cli/base'
 
-module Nbmd_ps
+module NbmdPs
   module CLI
     module Base
       # silence noop_execute
@@ -55,7 +55,7 @@ module CliBaseTestHelpers
   end
 end
 
-module Nbmd_psTestHelpers
+module NbmdPsTestHelpers
   module Paths
     def self.schemas(*args)
       File.join(File.expand_path('schemata', File.dirname(__FILE__)), *args)
@@ -72,17 +72,17 @@ module Nbmd_psTestHelpers
 end
 
 def schemas_path(*args)
-  Nbmd_psTestHelpers::Paths.schemas(*args)
+  NbmdPsTestHelpers::Paths.schemas(*args)
 end
 
 def input_schemas_path(*args)
-  Nbmd_psTestHelpers::Paths.input_schemas(*args)
+  NbmdPsTestHelpers::Paths.input_schemas(*args)
 end
 
 def output_schemas_path(*args)
-  Nbmd_psTestHelpers::Paths.output_schemas(*args)
+  NbmdPsTestHelpers::Paths.output_schemas(*args)
 end
 
 def user_input_schema
-  @user_input_schema ||= Nbmd_ps.combine(input_schemas_path('user.json'))
+  @user_input_schema ||= NbmdPs.combine(input_schemas_path('user.json'))
 end

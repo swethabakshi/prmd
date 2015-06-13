@@ -182,6 +182,6 @@ class InteragentHyperSchemaVerifyTest < Minitest::Test
   end
 
   def verify
-    Nbmd_ps.verify(data)
+    NbmdPs.verify(data)
   end
 end

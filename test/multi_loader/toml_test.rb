@@ -5,11 +5,11 @@ rescue LoadError
   #
 end
 
-class Nbmd_psMultiLoaderTomlTest < Minitest::Test
-  include Nbmd_psLoaderTests
+class NbmdPsMultiLoaderTomlTest < Minitest::Test
+  include NbmdPsLoaderTests
 
   def loader_module
-    Nbmd_ps::MultiLoader::Toml
+    NbmdPs::MultiLoader::Toml
   end
 
   def testing_filename

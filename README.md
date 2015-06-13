@@ -1,6 +1,6 @@
-# Nbmd_ps - Nimbus Supplier API v4
+# NbmdPs - Nimbus Supplier API v4
 
-JSON Schema tooling for the Nimbus Supplier API version 4. Nbmd_ps allows you to:
+JSON Schema tooling for the Nimbus Supplier API version 4. NbmdPs allows you to:
 
 1. scaffold an entire JSON schema project, properly structured
 2. generate your final json schema in seconds
@@ -56,7 +56,7 @@ $ bundle install
 
 ## Usage
 
-Nbmd_ps provides 6 main commands:
+NbmdPs provides 6 main commands:
 
 * `init`: Scaffold a new project
 * `generate`: Scaffold resource schemata
@@ -173,17 +173,17 @@ require 'nbmd_ps/rake_tasks/verify'
 require 'nbmd_ps/rake_tasks/doc'
 
 namespace :schema do
-  Nbmd_ps::RakeTasks::Combine.new do |t|
+  NbmdPs::RakeTasks::Combine.new do |t|
     t.options[:meta] = 'schema/meta.json'    # use meta.yml if you prefer YAML format
     t.paths << 'schema/schemata/api'
     t.output_file = 'schema/api.json'
   end
 
-  Nbmd_ps::RakeTasks::Verify.new do |t|
+  NbmdPs::RakeTasks::Verify.new do |t|
     t.files << 'schema/api.json'
   end
 
-  Nbmd_ps::RakeTasks::Doc.new do |t|
+  NbmdPs::RakeTasks::Doc.new do |t|
     t.files = { 'schema/api.json' => 'schema/api.md' }
   end
 end

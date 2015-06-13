@@ -1,11 +1,11 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'helpers'))
 require 'nbmd_ps/cli/doc'
 
-class Nbmd_psCliDocTest < Minitest::Test
+class NbmdPsCliDocTest < Minitest::Test
   include CliBaseTestHelpers
 
   def command_module
-    Nbmd_ps::CLI::Doc
+    NbmdPs::CLI::Doc
   end
 
   def argv_for_test_run

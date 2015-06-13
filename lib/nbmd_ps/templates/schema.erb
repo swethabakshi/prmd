@@ -1,0 +1,18 @@
+<%=
+  schemata_template = NbmdPs::Template::load('schemata.md.erb', options[:template])
+
+  schema['properties'].map do |resource, property|
+    begin
+      _, schemata = schema.dereference(property)
+      schemata_template.result({
+        options:         options,
+        resource:        resource,
+        schema:          schema,
+        schemata:        schemata
+      })
+    rescue => e
+      $stdout.puts("Error in resource: #{resource}")
+      raise e
+    end
+  end.join("\n")
+%>
