@@ -1,0 +1,67 @@
+{
+  "id": "schemata/contract",
+  "title": "Contract",
+  "description": "Customer contract for the product",
+  "entity": "contract",
+  "definitions": {
+      "id": {
+          "description": "unique identifier for the contract",
+          "example": "01234567-89ab-cdef-0123-456789abcdef",
+          "title":"Contract Id",
+          "format": "uuid",
+          "readOnly": true,
+          "options":{
+              "hidden":false
+          },
+          "type": "string"
+      },
+      "contract_billing_type": {
+          "description": "the type of contract",
+          "title":"Billing",
+          "example": "Monthly",
+          "readOnly": true,
+          "type": "string",
+          "enum": [
+              "Monthly",
+              "Quarterly",
+              "Yearly"
+          ]
+      },
+      "margin": {
+          "description": "Seller Margin in percentage",
+          "example": "10",
+          "readOnly": true,
+          "type": "integer"
+      },
+      "contract_length": {
+          "description": "Length of the contract in months",
+          "example": "12",
+          "type": "integer",
+          "readOnly": true,
+          "enum": [12,24,36]
+      },
+      "customer_id": {
+          "description": "the id of the Customer related to the contract",
+          "example": "grp-1f2d6",
+          "type": "string",
+          "readOnly": true
+      }
+  },
+  "properties": {
+      "id": {
+          "$ref": "/schemata/contract#/definitions/id"
+      },
+      "contract_billing_type": {
+          "$ref": "/schemata/contract#/definitions/contract_billing_type"
+      },
+      "margin": {
+          "$ref": "/schemata/contract#/definitions/margin"
+      },
+      "Contract Length": {
+          "$ref": "/schemata/contract#/definitions/contract_length"
+      },
+      "customer_id": {
+          "$ref": "/schemata/contract#/definitions/customer_id"
+      }
+  }
+}
