@@ -1,6 +1,6 @@
-# Prmd - Nimbus Supplier API v4
+# Nbmd_ps - Nimbus Supplier API v4
 
-JSON Schema tooling for the Nimbus Supplier API version 4. Prmd allows you to:
+JSON Schema tooling for the Nimbus Supplier API version 4. Nbmd_ps allows you to:
 
 1. scaffold an entire JSON schema project, properly structured
 2. generate your final json schema in seconds
@@ -15,19 +15,19 @@ All in one tool.
 Looking at getting started quickly with the Nimbus integration? Read our [GET STARTED](https://bitbucket.org/verecloud/nimbus.supplier.sdk/src/jsonschema/docs-v4/md/GET_STARTED.md) guide.
 
 [JSON Schema](http://json-schema.org/) provides a great way to describe
-an API. prmd provides tools for bootstrapping a description like this,
+an API. nbmd_ps provides tools for bootstrapping a description like this,
 verifying its completeness, and generating documentation from the
 specification.
 
 To learn more about JSON Schema in general, start with
 [this excellent guide](http://spacetelescope.github.io/understanding-json-schema/)
 and supplement with the [specification](http://json-schema.org/documentation.html).
-The JSON Schema usage conventions expected by prmd specifically are
+The JSON Schema usage conventions expected by nbmd_ps specifically are
 described in [/docs/schemata.md](/docs/schemata.md).
 
 ## Installation
 
-**Note:** prmd requires you to have ruby and rubygems installed.
+**Note:** nbmd_ps requires you to have ruby and rubygems installed.
 
 
 Install the command-line tool with:
@@ -37,17 +37,17 @@ Install the command-line tool with:
 $ cd /tmp
 $ git clone git@bitbucket.org:verecloud/nimbus.supplier.sdk.git
 $ git co jsonschema
-$ gem install tools/prmd/prmd-0.7.0.gem
+$ gem install tools/nbmd_ps/nbmd_ps-0.7.0.gem
 ```
 
 
 **Bundler install** via git **NOT** available for the moment
-If you're using prmd within a Ruby project, you may want to add it
+If you're using nbmd_ps within a Ruby project, you may want to add it
 to the application's Gemfile:
 
 ```ruby
 # Gem install via git
-gem 'prmd', git: 'git@bitbucket.org:verecloud/nimbus.supplier.sdk.git'
+gem 'nbmd_ps', git: 'git@bitbucket.org:verecloud/nimbus.supplier.sdk.git'
 ```
 
 ```bash
@@ -56,7 +56,7 @@ $ bundle install
 
 ## Usage
 
-Prmd provides 6 main commands:
+Nbmd_ps provides 6 main commands:
 
 * `init`: Scaffold a new project
 * `generate`: Scaffold resource schemata
@@ -72,33 +72,33 @@ Here's an example of going from zero to a full project:
 # This command will create the acme-email folder and bootstrap
 # the project with a meta.json file (global definition) plus
 # a set of product/system/account resources
-$ prmd init Acme Email
+$ nbmd_ps init Acme Email
 
 # Or if you prefer the YAML format
-$ prmd init --yaml Acme Email
+$ nbmd_ps init --yaml Acme Email
 
 # Generate your JSON schema from your meta + resource definitions
 $ cd acme-email
-$ prmd combine --meta meta.json schemata/ > schema.json
+$ nbmd_ps combine --meta meta.json schemata/ > schema.json
 
 # Check your schema is nimbus-valid
 # Note: this may not pass at the moment - hyper-schema is currently work in progress
-$ prmd verify schema.json
+$ nbmd_ps verify schema.json
 
 # Generate your JSON schema documentation
-$ prmd doc schema.json > schema.md
+$ nbmd_ps doc schema.json > schema.md
 ```
 
 For other supplier levels, you would do the following
 ```bash
 # Scaffold a new project which only contains product provisioning
-$ prmd init --level 2 Acme Email
+$ nbmd_ps init --level 2 Acme Email
 
 # Scaffold a new project which only contains product definition
-$ prmd init --level 1 Acme Email
+$ nbmd_ps init --level 1 Acme Email
 
 # Different levels can also be generated in YAML format
-$ prmd init --yaml --level 2 Acme Email
+$ nbmd_ps init --yaml --level 2 Acme Email
 ```
 
 If you need to create a new resource (product, account or system)
@@ -107,18 +107,18 @@ If you need to create a new resource (product, account or system)
 $ cd acme-email
 
 # Generate a new 'Load Balancer' product
-$ prmd generate Load Balancer > schemata/products/load_balancer.json
+$ nbmd_ps generate Load Balancer > schemata/products/load_balancer.json
 
 # If you are working on a project for a level 1 or level 2 supplier, just
 # specify the level when creating new resources
 # E.g.: level 1 will not generate any link for the product
-$ prmd generate --level 1 Load Balancer > schemata/products/load_balancer.json
+$ nbmd_ps generate --level 1 Load Balancer > schemata/products/load_balancer.json
 
 # It also works with YAML
-$ prmd generate --yaml --level 1 Load Balancer > schemata/products/load_balancer.yml
+$ nbmd_ps generate --yaml --level 1 Load Balancer > schemata/products/load_balancer.yml
 
 # To preview a resource schema without actually generating a file
-$ prmd generate --level 1 Load Balancer
+$ nbmd_ps generate --level 1 Load Balancer
 ```
 
 `combine` can detect both `*.yml` and `*.json` and use them side by side. For example, if one have a lot of legacy JSON resources and wants to create new resources in YAML format - `combine` will be able to handle it properly.
@@ -126,30 +126,30 @@ $ prmd generate --level 1 Load Balancer
 # Render from schema
 
 ```bash
-$ prmd render --template schemata.erb schema.json > schema.md
+$ nbmd_ps render --template schemata.erb schema.json > schema.md
 ```
 
 Typically you'll want to prepend header and overview information to
 your API documentation. You can do this with the `--prepend` flag:
 
 ```bash
-$ prmd doc --prepend overview.md schema.json > schema.md
+$ nbmd_ps doc --prepend overview.md schema.json > schema.md
 ```
 
 You can also chain commands together as needed, e.g.:
 
 ```bash
-$ prmd combine --meta meta.json schemata/ | prmd verify | prmd doc --prepend overview.md > schema.md
+$ nbmd_ps combine --meta meta.json schemata/ | nbmd_ps verify | nbmd_ps doc --prepend overview.md > schema.md
 ```
 
-See `prmd <command> --help` for additional usage details.
+See `nbmd_ps <command> --help` for additional usage details.
 
 ## Documentation rendering settings
 
 Out of the box you can supply a settings file (in either `JSON` or `YAML`) that will tweak the layout of your documentation.
 
 ```bash
-$ prmd doc --settings config.json schema.json > schema.md
+$ nbmd_ps doc --settings config.json schema.json > schema.md
 ```
 
 Available options (and their defaults)
@@ -164,26 +164,26 @@ Available options (and their defaults)
 
 ## Use as rake task
 
-In addition, prmd can be used via rake tasks
+In addition, nbmd_ps can be used via rake tasks
 
 ```ruby
 # Rakefile
-require 'prmd/rake_tasks/combine'
-require 'prmd/rake_tasks/verify'
-require 'prmd/rake_tasks/doc'
+require 'nbmd_ps/rake_tasks/combine'
+require 'nbmd_ps/rake_tasks/verify'
+require 'nbmd_ps/rake_tasks/doc'
 
 namespace :schema do
-  Prmd::RakeTasks::Combine.new do |t|
+  Nbmd_ps::RakeTasks::Combine.new do |t|
     t.options[:meta] = 'schema/meta.json'    # use meta.yml if you prefer YAML format
     t.paths << 'schema/schemata/api'
     t.output_file = 'schema/api.json'
   end
 
-  Prmd::RakeTasks::Verify.new do |t|
+  Nbmd_ps::RakeTasks::Verify.new do |t|
     t.files << 'schema/api.json'
   end
 
-  Prmd::RakeTasks::Doc.new do |t|
+  Nbmd_ps::RakeTasks::Doc.new do |t|
     t.files = { 'schema/api.json' => 'schema/api.md' }
   end
 end

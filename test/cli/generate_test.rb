@@ -1,11 +1,11 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'helpers'))
-require 'prmd/cli/generate'
+require 'nbmd_ps/cli/generate'
 
-class PrmdCliGenerateTest < Minitest::Test
+class Nbmd_psCliGenerateTest < Minitest::Test
   include CliBaseTestHelpers
 
   def command_module
-    Prmd::CLI::Generate
+    Nbmd_ps::CLI::Generate
   end
 
   def argv_for_test_run

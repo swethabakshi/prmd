@@ -1,9 +1,9 @@
 require 'minitest'
 require 'minitest/autorun'
-require 'prmd'
-require 'prmd/cli/base'
+require 'nbmd_ps'
+require 'nbmd_ps/cli/base'
 
-module Prmd
+module Nbmd_ps
   module CLI
     module Base
       # silence noop_execute
@@ -55,7 +55,7 @@ module CliBaseTestHelpers
   end
 end
 
-module PrmdTestHelpers
+module Nbmd_psTestHelpers
   module Paths
     def self.schemas(*args)
       File.join(File.expand_path('schemata', File.dirname(__FILE__)), *args)
@@ -72,17 +72,17 @@ module PrmdTestHelpers
 end
 
 def schemas_path(*args)
-  PrmdTestHelpers::Paths.schemas(*args)
+  Nbmd_psTestHelpers::Paths.schemas(*args)
 end
 
 def input_schemas_path(*args)
-  PrmdTestHelpers::Paths.input_schemas(*args)
+  Nbmd_psTestHelpers::Paths.input_schemas(*args)
 end
 
 def output_schemas_path(*args)
-  PrmdTestHelpers::Paths.output_schemas(*args)
+  Nbmd_psTestHelpers::Paths.output_schemas(*args)
 end
 
 def user_input_schema
-  @user_input_schema ||= Prmd.combine(input_schemas_path('user.json'))
+  @user_input_schema ||= Nbmd_ps.combine(input_schemas_path('user.json'))
 end

@@ -1,11 +1,11 @@
 require File.expand_path(File.join(File.dirname(__FILE__), '..', 'helpers'))
-require 'prmd/cli/verify'
+require 'nbmd_ps/cli/verify'
 
-class PrmdCliVerifyTest < Minitest::Test
+class Nbmd_psCliVerifyTest < Minitest::Test
   include CliBaseTestHelpers
 
   def command_module
-    Prmd::CLI::Verify
+    Nbmd_ps::CLI::Verify
   end
 
   def argv_for_test_run

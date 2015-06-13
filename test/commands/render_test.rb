@@ -144,10 +144,10 @@ class InteragentRenderTest < Minitest::Test
   end
 
   def render
-    schema = Prmd::Schema.new(data)
+    schema = Nbmd_ps::Schema.new(data)
 
-    template = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'prmd', 'templates'))
+    template = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'nbmd_ps', 'templates'))
 
-    Prmd.render(schema, template: template)
+    Nbmd_ps.render(schema, template: template)
   end
 end

@@ -1,11 +1,11 @@
 require File.expand_path('common', File.dirname(__FILE__))
-require 'prmd/multi_loader/yaml'
+require 'nbmd_ps/multi_loader/yaml'
 
-class PrmdMultiLoaderYamlTest < Minitest::Test
-  include PrmdLoaderTests
+class Nbmd_psMultiLoaderYamlTest < Minitest::Test
+  include Nbmd_psLoaderTests
 
   def loader_module
-    Prmd::MultiLoader::Yaml
+    Nbmd_ps::MultiLoader::Yaml
   end
 
   def testing_filename

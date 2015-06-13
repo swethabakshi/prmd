@@ -215,9 +215,9 @@
   "title": "Rake Task Test",
   "links": [
     {
-      "href": "https://prmd.rake_task_test.io",
+      "href": "https://nbmd_ps.rake_task_test.io",
       "rel": "self"
     }
   ],
-  "description": "Testing schema for Prmd RakeTasks"
+  "description": "Testing schema for Nbmd_ps RakeTasks"
 }

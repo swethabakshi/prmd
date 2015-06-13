@@ -1,15 +1,15 @@
 require File.expand_path('common', File.dirname(__FILE__))
 begin
-  require 'prmd/multi_loader/toml'
+  require 'nbmd_ps/multi_loader/toml'
 rescue LoadError
   #
 end
 
-class PrmdMultiLoaderTomlTest < Minitest::Test
-  include PrmdLoaderTests
+class Nbmd_psMultiLoaderTomlTest < Minitest::Test
+  include Nbmd_psLoaderTests
 
   def loader_module
-    Prmd::MultiLoader::Toml
+    Nbmd_ps::MultiLoader::Toml
   end
 
   def testing_filename
