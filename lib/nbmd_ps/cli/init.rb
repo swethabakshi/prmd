@@ -102,29 +102,16 @@ module NbmdPs
           new_project = true
         end
         
-        # Create schemata/system/event.json schema file
+        # Create schemata/system/contract.json schema file
         if options[:level] >= 3
-          res_name = "schemata/system/event.#{options[:yaml] ? 'yaml' : 'json'}"
+          res_name = "schemata/system/contract.#{options[:yaml] ? 'yaml' : 'json'}"
           resource = "#{safename}/#{res_name}"
           path = "#{project_path}/#{res_name}"
           if File.exists?(path)
             notify(resource, "File already exists - No action", :warning)
           else
-            write_result NbmdPs.generate('organization/event', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
+            write_result NbmdPs.generate('organization/contract', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
             notify(resource, "Event schema created", :success)
-          end
-        end
-        
-        # Create schemata/system/resource_instance.json schema file
-        if options[:level] >= 3
-          res_name = "schemata/system/resource_instance.#{options[:yaml] ? 'yaml' : 'json'}"
-          resource = "#{safename}/#{res_name}"
-          path = "#{project_path}/#{res_name}"
-          if File.exists?(path)
-            notify(resource, "File already exists - No action", :warning)
-          else
-            write_result NbmdPs.generate('organization/resource_instance', options.merge(tpl: 'generate_resource_instance.json.erb')), output_file: path
-            notify(resource, "Resource Instance schema created", :success)
           end
         end
         
@@ -140,18 +127,6 @@ module NbmdPs
         end
         
         if new_project
-          # Create schemata/products/virtual_machine.json schema file
-          res_name = "schemata/products/virtual_server.#{options[:yaml] ? 'yaml' : 'json'}"
-          resource = "#{safename}/#{res_name}"
-          path = "#{project_path}/#{res_name}"
-          if File.exists?(path)
-            notify(resource, "File already exists - No action", :warning)
-          else
-            write_result NbmdPs.generate('organization/virtual_machine', options), output_file: path
-            notify(resource, "Example product schema created: Virtual Machine", :success)
-          end
-        end
-        
         # Prepare schemata/accounts folder
         res_name = "schemata/accounts"
         resource = "#{safename}/#{res_name}"
@@ -175,18 +150,6 @@ module NbmdPs
             notify(resource, "Example account schema created: Organization", :success)
           end
           
-          # Create schemata/system/user.json schema file
-          res_name = "schemata/accounts/user.#{options[:yaml] ? 'yaml' : 'json'}"
-          resource = "#{safename}/#{res_name}"
-          path = "#{project_path}/#{res_name}"
-          if File.exists?(path)
-            notify(resource, "File already exists - No action", :warning)
-          else
-            write_result NbmdPs.generate('user', options), output_file: path
-            notify(resource, "Example account schema created: User", :success)
-          end
-        end
-        
         notify "\n"
       end
     end

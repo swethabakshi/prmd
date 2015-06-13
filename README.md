@@ -204,7 +204,7 @@ We suggest the following file layout for JSON schema related files:
       /products
         /{virtual_machine.[json,yml]} (individual product schema - all levels)
       /system
-        /{event.[json,yml]} (system usage/event/statistic resources - level 3 only)
+        /{contract.[json,yml]} (Contract details of the product)
     /meta.[json,yml] (overall API metadata)
     /overview.md (preamble for generated API docs)
     /schema.json (complete generated JSON schema file)
