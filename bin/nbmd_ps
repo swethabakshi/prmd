@@ -1,10 +1,6 @@
 #!/usr/bin/env ruby
 require 'optparse'
 
-# bin/myfirstgem - command for following
-lib = File.expand_path('../../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
 # Get actual file
 _file = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
 
@@ -15,8 +11,7 @@ begin
   require 'nbmd_ps/cli'
 rescue LoadError
   # Try to add local gem to load path
-  #path = File.expand_path("../lib", _file)
-  path = File.expand_path(lib, _file)
+  path = File.expand_path("../../lib", _file)
   if File.exists?("#{path}/nbmd_ps.rb")
     $:.push path
     retry
@@ -24,3 +19,4 @@ rescue LoadError
   raise
 end
 
+NbmdPs::CLI.run(ARGV.dup, bin: File.basename(_file))
