@@ -91,7 +91,8 @@
                 "definitions",
                 "description",
                 "title",
-                "type"
+                "type",
+		       "readOnly"
             ]
         },
         "resourceDefinition": {
@@ -130,7 +131,7 @@
                             "type": "boolean"
                         }
                     },
-                    "required": ["description", "properties", "type"]
+                    "required": ["description", "properties", "type","readOnly"]
                 },
                 {
                     "properties": {
@@ -142,7 +143,7 @@
                 }
             ]
         },
-        "eventDefinition": {
+        "contractDefinition": {
             "properties": {
               "links": {
                   "items": [
@@ -169,21 +170,20 @@
                       }
                   ]
               }
-            },
-            "required": ["links"]
+            }
         }
     },
     "properties": {
         "definitions": {
             "properties": {
-                "event": {
-                    "$ref": "#/definitions/eventDefinition"
+                "contract": {
+                    "$ref": "#/definitions/contractDefinition"
                 }
             },
             "additionalProperties": {
                 "$ref": "#/definitions/resource"
             },
-            "required": ["event"]
+            "required": ["contract"]
         },
         "links": {
             "additionalProperties": {
