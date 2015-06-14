@@ -2,7 +2,11 @@
   "id": "schemata/contract",
   "title": "Contract",
   "description": "Customer contract for the product",
+  "readOnly":false,
   "entity": "contract",
+  "options":{
+     "hidden":false
+  },
   "definitions": {
       "id": {
           "description": "unique identifier for the contract",
@@ -10,41 +14,53 @@
           "title":"Contract Id",
           "format": "uuid",
           "readOnly": true,
+          "type": "string",
           "options":{
-              "hidden":false
-          },
-          "type": "string"
+            "hidden":true
+          }
       },
       "contract_billing_type": {
           "description": "the type of contract",
           "title":"Billing",
           "example": "Monthly",
-          "readOnly": true,
+          "readOnly": false,
           "type": "string",
           "enum": [
               "Monthly",
               "Quarterly",
               "Yearly"
-          ]
+          ],
+          "options":{
+            "hidden":false
+          }
       },
       "margin": {
           "description": "Seller Margin in percentage",
           "example": "10",
-          "readOnly": true,
-          "type": "integer"
+          "readOnly": false,
+          "type": "integer",
+          "options":{
+            "hidden":false
+          }
       },
       "contract_length": {
           "description": "Length of the contract in months",
           "example": "12",
           "type": "integer",
-          "readOnly": true,
-          "enum": [12,24,36]
+          "readOnly": false,
+          "enum": [12,24,36],
+          "options":{
+            "hidden":false
+          }
       },
       "customer_id": {
           "description": "the id of the Customer related to the contract",
           "example": "grp-1f2d6",
           "type": "string",
-          "readOnly": true
+          "readOnly": true,
+          "options":{
+            "hidden":false
+          }
       }
   },
   "properties": {
@@ -57,7 +73,7 @@
       "margin": {
           "$ref": "/schemata/contract#/definitions/margin"
       },
-      "Contract Length": {
+      "contract_length": {
           "$ref": "/schemata/contract#/definitions/contract_length"
       },
       "customer_id": {

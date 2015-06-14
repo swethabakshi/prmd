@@ -2,31 +2,68 @@
   "id": "schemata/<%= resource %>",
   "title": "<%= resource.capitalize %>",
   "description": "A description of the <%= resource.titleize %> resource",
+  "readOnly": false,
+  "options":{
+          "hidden":false
+  },
   "definitions": {
     "id": {
       "description": "unique identifier of the <%= resource %>",
       "example": "01234567-89ab-cdef-0123-456789abcdef",
       "readOnly": true,
       "format": "uuid",
-      "type": ["string"]
+      "type": ["string"],
+      "options":{
+          "hidden":true
+      }
     },
     "name": {
       "description": "unique name of the <%= resource.titleize %>",
       "example": "name",
       "readOnly": true,
-      "type": ["string"]
+      "type": ["string"],
+      "options":{
+          "hidden":false
+      }
+    },
+    "admin_email": {
+      "description": "Admin Email id to manage orders for <%= resource.titleize %>",
+      "example": "john.doe@myorg.com",
+      "format":"email",
+      "readOnly": true,
+      "type": ["string"],
+      "options":{
+          "hidden":false
+      }
+    },
+    "password": {
+      "description": "Password for admin to login to the <%= resource.titleize %>",
+      "example": "Password-- for somereason parse is not acception password format - add it later",
+      "default":"Password123",
+      "readOnly": true,
+      "type": ["string"],
+      "options":{
+          "hidden":false
+      }
     },
     "created_at": {
       "description": "when the <%= resource.titleize %> was created",
       "example": "2012-01-01T12:00:00Z",
+      "readOnly":true,
       "format": "date-time",
-      "type": ["string"]
+      "type": ["string"],
+      "options":{
+          "hidden":true
+      }
     },
     "updated_at": {
       "description": "when the <%= resource.titleize %> was last updated",
       "example": "2012-01-01T12:00:00Z",
-      "format": "date-time",
-      "type": ["string"]
+      "readOnly":true,
+      "type": ["string"],
+      "options":{
+          "hidden":true
+      }
     }
   },
   "properties": {
@@ -39,73 +76,37 @@
     "name": {
       "$ref": "/schemata/<%= resource %>#/definitions/name"
     },
+    "admin_email": {
+      "$ref": "/schemata/<%= resource %>#/definitions/admin_email"
+    },
+    "password": {
+      "$ref": "/schemata/<%= resource %>#/definitions/password"
+    },
     "updated_at": {
       "$ref": "/schemata/<%= resource %>#/definitions/updated_at"
     }
   },
-  "links": [<% if level >= 2 %>
-    <% if parent && level >= 3 %>
+  "links": [
     {
-      "description": "Create a new <%= resource.titleize %>.",
-      "href": "/<%= parent %>s/{(%2Fschemata%2F<%= parent %>%23%2Fdefinitions%2Fid)}/<%= resource %>s",
+      "description": "New Order",
+      "href": "/productOrder",
       "method": "POST",
       "rel": "create",
       "schema": {
         "properties": {},
         "type": ["object"]
       },
-      "title": "Create"
-    }<% else %>
-    {
-      "description": "Create a new <%= resource.titleize %>.",
-      "href": "/<%= resource %>s",
-      "method": "POST",
-      "rel": "create",
-      "schema": {
-        "properties": {},
-        "type": ["object"]
-      },
-      "title": "Create"
-    }<% end %>
-    <% if level >=3 %>,{
-      "description": "Info for an existing <%= resource.titleize %>.",
-      "href": "/<%= resource %>s/{(%2Fschemata%2F<%= resource %>%23%2Fdefinitions%2Fid)}",
-      "method": "GET",
-      "rel": "self",
-      "title": "Info"
+      "title": "New Install"
     },
-    <% if parent %>
     {
-      "description": "List existing <%= resource.titleize %>s for existing <%= parent.titleize %>.",
-      "href": "/<%= parent %>s/{(%2Fschemata%2F<%= parent %>%23%2Fdefinitions%2Fid)}/<%= resource %>s",
-      "method": "GET",
-      "rel": "instances",
-      "title": "List"
-    }<% else %>
-    {
-      "description": "List existing <%= resource.titleize %>s.",
-      "href": "/<%= resource %>s",
-      "method": "GET",
-      "rel": "instances",
-      "title": "List"
-    }<% end %>,
-    {
-      "description": "Update an existing <%= resource.titleize %>.",
-      "href": "/<%= resource %>s/{(%2Fschemata%2F<%= resource %>%23%2Fdefinitions%2Fid)}",
+      "description": "Update an existing order <%= resource.titleize %>.",
+      "href": "/changeProductOrder",
       "method": "PUT",
       "rel": "update",
       "schema": {
         "properties": {},
         "type": ["object"]
       },
-      "title": "Update"
-    },
-    {
-      "description": "Delete an existing <%= resource.titleize %>.",
-      "href": "/<%= resource %>s/{(%2Fschemata%2F<%= resource %>%23%2Fdefinitions%2Fid)}",
-      "method": "DELETE",
-      "rel": "destroy",
-      "title": "Delete"
-    }<% end %>
-  <% end %>]
+      "title": "Change Order"
+    }]
 }

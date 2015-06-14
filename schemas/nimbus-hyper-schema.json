@@ -29,7 +29,7 @@
         "link": {
             "properties": {
                 "href": {
-                    "pattern": "^(/([a-z][a-z\\-_]*[a-z]|\\{\\(.*\\)\\}))+$"
+                    "pattern": "^(/([a-z][a-z]*([A-Z][a-z]*)*))+$"
                 },
                 "schema": {
                     "anyOf": [
@@ -178,11 +178,7 @@
     },
     "properties": {
         "definitions": {
-            "properties": {
-                "contract": {
-                    "$ref": "#/definitions/contractDefinition"
-                }
-            },
+            
             "additionalProperties": {
                 "$ref": "#/definitions/resource"
             },

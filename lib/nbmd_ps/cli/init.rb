@@ -111,7 +111,7 @@ module NbmdPs
             notify(resource, "File already exists - No action", :warning)
           else
             write_result NbmdPs.generate('organization/contract', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
-            notify(resource, "Event schema created", :success)
+            notify(resource, "Contract schema created", :success)
           end
         end
         
