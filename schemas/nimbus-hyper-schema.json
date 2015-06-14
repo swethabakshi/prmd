@@ -142,38 +142,6 @@
                     "required": ["description", "items", "type"]
                 }
             ]
-        },
-        "contractDefinition": {
-            "properties": {
-              "links": {
-                  "items": [
-                      { 
-                          "properties": {
-                              "href": {
-                                  "type": "string"
-                              },
-                              "rel": {
-                                  "enum": ["self"]
-                              }
-                          }
-                      },
-                      {
-                          "properties": {
-                              "href": {
-                                  "type": "string"
-                              },
-                              "rel": {
-                                  "enum": ["instances"]
-                              }
-                          }
-                          
-                      }
-                  ]
-              }
-            },
-            "not": {
-                "required": ["links"]
-            }
         }
     },
     "properties": {
@@ -200,7 +168,6 @@
         "definitions",
         "description",
         "id",
-        "links",
         "properties",
         "title",
         "type"

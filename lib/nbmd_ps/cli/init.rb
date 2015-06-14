@@ -102,18 +102,6 @@ module NbmdPs
           new_project = true
         end
         
-        # Create schemata/system/contract.json schema file
-        if options[:level] >= 3
-          res_name = "schemata/system/contract.#{options[:yaml] ? 'yaml' : 'json'}"
-          resource = "#{safename}/#{res_name}"
-          path = "#{project_path}/#{res_name}"
-          if File.exists?(path)
-            notify(resource, "File already exists - No action", :warning)
-          else
-            write_result NbmdPs.generate('product/contract', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
-            notify(resource, "Contract schema created", :success)
-          end
-        end
         
         # Prepare schemata/products folder
         #res_name = "schemata/products"
@@ -137,8 +125,22 @@ module NbmdPs
           notify(resource, "Accounts schema definition directory created", :success)
         end
         
+
+        # Create schemata/accounts/contract.json schema file
+        if options[:level] >= 3
+          res_name = "schemata/accounts/contract.#{options[:yaml] ? 'yaml' : 'json'}"
+          resource = "#{safename}/#{res_name}"
+          path = "#{project_path}/#{res_name}"
+          if File.exists?(path)
+            notify(resource, "File already exists - No action", :warning)
+          else
+            write_result NbmdPs.generate('product/contract', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
+            notify(resource, "Contract schema created", :success)
+          end
+        end
+
         if new_project && options[:level] >= 3
-          # Create schemata/system/product.json schema file
+          # Create schemata/accounts/product.json schema file
           res_name = "schemata/accounts/product.#{options[:yaml] ? 'yaml' : 'json'}"
           resource = "#{safename}/#{res_name}"
           path = "#{project_path}/#{res_name}"
