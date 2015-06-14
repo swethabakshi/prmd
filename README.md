@@ -36,7 +36,6 @@ Install the command-line tool with:
 # Only available if you have read access to the project
 $ cd /tmp
 $ git clone git@bitbucket.org:verecloud/nimbus.supplier.sdk.git
-$ git co jsonschema
 $ gem install tools/nbmd_ps/nbmd_ps-0.7.0.gem
 ```
 
@@ -59,7 +58,7 @@ $ bundle install
 NbmdPs provides 6 main commands:
 
 * `init`: Scaffold a new project
-* `generate`: Scaffold resource schemata
+* `generate`: Scaffold resource schemata - generates schema for product specification
 * `combine`: Combine schemata and metadata into single schema
 * `verify`: Verify a schema
 * `doc`: Generate documentation from a schema
