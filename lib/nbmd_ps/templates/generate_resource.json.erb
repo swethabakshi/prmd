@@ -3,11 +3,8 @@
   "title": "<%= resource.capitalize %>",
   "description": "A description of the <%= resource.titleize %> resource",
   "readOnly": false,
-  "options":{
-          "hidden":false
-  },
   "definitions": {
-    "id": {
+    "product_id": {
       "description": "unique identifier of the <%= resource %>",
       "example": "01234567-89ab-cdef-0123-456789abcdef",
       "readOnly": true,
@@ -17,10 +14,29 @@
           "hidden":true
       }
     },
-    "name": {
+    "product_name": {
       "description": "unique name of the <%= resource.titleize %>",
       "example": "name",
+      "readOnly": false,
+      "type": ["string"],
+      "options":{
+          "hidden":false
+      }
+    },
+    "id": {
+      "description": "unique identifier of the customer",
+      "example": "01234567-89ab-cdef-0123-456789abcdef",
       "readOnly": true,
+      "format": "uuid",
+      "type": ["string"],
+      "options":{
+          "hidden":true
+      }
+    },
+    "name": {
+      "description": "unique name of the customer associated with <%= resource.titleize %>",
+      "example": "name",
+      "readOnly": false,
       "type": ["string"],
       "options":{
           "hidden":false
@@ -30,7 +46,7 @@
       "description": "Admin Email id to manage orders for <%= resource.titleize %>",
       "example": "john.doe@myorg.com",
       "format":"email",
-      "readOnly": true,
+      "readOnly": false,
       "type": ["string"],
       "options":{
           "hidden":false
@@ -40,7 +56,7 @@
       "description": "Password for admin to login to the <%= resource.titleize %>",
       "example": "Password-- for somereason parse is not acception password format - add it later",
       "default":"Password123",
-      "readOnly": true,
+      "readOnly": false,
       "type": ["string"],
       "options":{
           "hidden":false
@@ -64,27 +80,44 @@
       "options":{
           "hidden":true
       }
-    }
+    },
+    "customer":{
+        "type":"object",
+        "title":"Customer",
+        "description": "Customer Information for <%= resource.titleize %> ",
+        "readOnly": false,
+        "properties":{
+          "created_at": {
+            "$ref": "/schemata/<%= resource %>#/definitions/created_at"
+          },
+          "id": {
+            "$ref": "/schemata/<%= resource %>#/definitions/id"
+          },
+          "name": {
+            "$ref": "/schemata/<%= resource %>#/definitions/name"
+          },
+          "admin_email": {
+            "$ref": "/schemata/<%= resource %>#/definitions/admin_email"
+          },
+          "password": {
+            "$ref": "/schemata/<%= resource %>#/definitions/password"
+          },
+          "updated_at": {
+            "$ref": "/schemata/<%= resource %>#/definitions/updated_at"
+          }
+        }
+  }
   },
   "properties": {
-    "created_at": {
-      "$ref": "/schemata/<%= resource %>#/definitions/created_at"
+    "product_id": {
+      "$ref": "/schemata/<%= resource %>#/definitions/product_id"
     },
-    "id": {
-      "$ref": "/schemata/<%= resource %>#/definitions/id"
+    "product_name": {
+      "$ref": "/schemata/<%= resource %>#/definitions/product_name"
     },
-    "name": {
-      "$ref": "/schemata/<%= resource %>#/definitions/name"
-    },
-    "admin_email": {
-      "$ref": "/schemata/<%= resource %>#/definitions/admin_email"
-    },
-    "password": {
-      "$ref": "/schemata/<%= resource %>#/definitions/password"
-    },
-    "updated_at": {
-      "$ref": "/schemata/<%= resource %>#/definitions/updated_at"
-    }
+    "customer":{
+      "$ref": "/schemata/<%= resource %>#/definitions/customer"
+  }
   },
   "links": [
     {

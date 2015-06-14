@@ -110,21 +110,21 @@ module NbmdPs
           if File.exists?(path)
             notify(resource, "File already exists - No action", :warning)
           else
-            write_result NbmdPs.generate('organization/contract', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
+            write_result NbmdPs.generate('product/contract', options.merge(tpl: 'generate_contract.json.erb')), output_file: path
             notify(resource, "Contract schema created", :success)
           end
         end
         
         # Prepare schemata/products folder
-        res_name = "schemata/products"
-        resource = "#{safename}/#{res_name}"
-        path = "#{project_path}/#{res_name}"
-        if File.directory?(path)
-          notify(resource, "Directory already exists - No action", :warning)
-        else
-          FileUtils.mkdir_p path
-          notify(resource, "Product schema definition directory created", :success)
-        end
+        #res_name = "schemata/products"
+        #resource = "#{safename}/#{res_name}"
+        #path = "#{project_path}/#{res_name}"
+        #if File.directory?(path)
+        #  notify(resource, "Directory already exists - No action", :warning)
+        #else
+        #  FileUtils.mkdir_p path
+        #  notify(resource, "Product schema definition directory created", :success)
+        #end
         
         # Prepare schemata/accounts folder
         res_name = "schemata/accounts"
@@ -138,15 +138,15 @@ module NbmdPs
         end
         
         if new_project && options[:level] >= 3
-          # Create schemata/system/organization.json schema file
-          res_name = "schemata/accounts/organization.#{options[:yaml] ? 'yaml' : 'json'}"
+          # Create schemata/system/product.json schema file
+          res_name = "schemata/accounts/product.#{options[:yaml] ? 'yaml' : 'json'}"
           resource = "#{safename}/#{res_name}"
           path = "#{project_path}/#{res_name}"
           if File.exists?(path)
             notify(resource, "File already exists - No action", :warning)
           else
-            write_result NbmdPs.generate('organization', options), output_file: path
-            notify(resource, "Example account schema created: Organization", :success)
+            write_result NbmdPs.generate('product', options), output_file: path
+            notify(resource, "Example account schema created: Product", :success)
           end
           
         end
