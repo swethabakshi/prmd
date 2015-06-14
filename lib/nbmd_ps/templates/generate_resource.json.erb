@@ -42,6 +42,15 @@
           "hidden":false
       }
     },
+    "domain": {
+      "description": "unique domain of the customer associated with <%= resource.titleize %>",
+      "example": "westcon.org",
+      "readOnly": false,
+      "type": ["string"],
+      "options":{
+          "hidden":false
+      }
+    },
     "admin_email": {
       "description": "Admin Email id to manage orders for <%= resource.titleize %>",
       "example": "john.doe@myorg.com",
@@ -91,10 +100,16 @@
             "$ref": "/schemata/<%= resource %>#/definitions/created_at"
           },
           "id": {
-            "$ref": "/schemata/<%= resource %>#/definitions/id"
+            "$ref": "/schemata/<%= resource %>#/definitions/id",
+              "options": {
+                "hidden": true
+              }
           },
-          "name": {
+          "company": {
             "$ref": "/schemata/<%= resource %>#/definitions/name"
+          },
+          "domain": {
+            "$ref": "/schemata/<%= resource %>#/definitions/domain"
           },
           "admin_email": {
             "$ref": "/schemata/<%= resource %>#/definitions/admin_email"
@@ -103,14 +118,21 @@
             "$ref": "/schemata/<%= resource %>#/definitions/password"
           },
           "updated_at": {
-            "$ref": "/schemata/<%= resource %>#/definitions/updated_at"
+            "$ref": "/schemata/<%= resource %>#/definitions/updated_at",
+            "options": {
+              "hidden": true
+            }
           }
-        }
+        },
+        "required":["admin_email","domain"]
   }
   },
   "properties": {
     "product_id": {
-      "$ref": "/schemata/<%= resource %>#/definitions/product_id"
+      "$ref": "/schemata/<%= resource %>#/definitions/product_id",
+      "options": {
+          "hidden": true
+      }
     },
     "product_name": {
       "$ref": "/schemata/<%= resource %>#/definitions/product_name"
@@ -119,6 +141,7 @@
       "$ref": "/schemata/<%= resource %>#/definitions/customer"
   }
   },
+  "required":["product_name","customer"],
   "links": [
     {
       "description": "New Order",
