@@ -126,19 +126,6 @@ module NbmdPs
           notify(resource, "Product schema definition directory created", :success)
         end
         
-        if new_project
-          # Create schemata/products/virtual_machine.json schema file
-          res_name = "schemata/products/virtual_server.#{options[:yaml] ? 'yaml' : 'json'}"
-          resource = "#{safename}/#{res_name}"
-          path = "#{project_path}/#{res_name}"
-          if File.exists?(path)
-            notify(resource, "File already exists - No action", :warning)
-          else
-            write_result NbmdPs.generate('organization/virtual_machine', options), output_file: path
-            notify(resource, "Example product schema created: Virtual Machine", :success)
-          end
-        end
-        
         # Prepare schemata/accounts folder
         res_name = "schemata/accounts"
         resource = "#{safename}/#{res_name}"
@@ -162,16 +149,6 @@ module NbmdPs
             notify(resource, "Example account schema created: Organization", :success)
           end
           
-          # Create schemata/system/user.json schema file
-          res_name = "schemata/accounts/user.#{options[:yaml] ? 'yaml' : 'json'}"
-          resource = "#{safename}/#{res_name}"
-          path = "#{project_path}/#{res_name}"
-          if File.exists?(path)
-            notify(resource, "File already exists - No action", :warning)
-          else
-            write_result NbmdPs.generate('user', options), output_file: path
-            notify(resource, "Example account schema created: User", :success)
-          end
         end
         
         notify "\n"
